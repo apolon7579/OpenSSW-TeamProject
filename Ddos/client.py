@@ -2,6 +2,8 @@ from socket import *
 import threading
 import requests
 
+# 클라이언트입니다
+
 def get_flooding():
   URL = 'http://182.230.134.78:8080' 
   while(True):
