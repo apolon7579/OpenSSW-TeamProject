@@ -8,7 +8,7 @@ class SampleApp(Tk):
         Tk.__init__(self)
         self._frame = None
         self.geometry("1920x1080")
-        self.switch_frame(UnZipper)
+        self.switch_frame(Sscreen)
 
     def switch_frame(self, frame_class):
         new_frame = frame_class(self)
@@ -16,6 +16,66 @@ class SampleApp(Tk):
             self._frame.destroy()
         self._frame = new_frame
         self._frame.pack()
+
+class Sscreen(Frame):
+    def __init__(self, master):
+        Frame.__init__(self, master)
+        font = tkinter.font.Font(family="Malgun Gothic", size=40, weight="bold", slant="italic")
+
+        #프레임 설정
+        titleSs=tkinter.Frame(self)
+        titleSs.pack(side="top", anchor="center", ipady=170, expand = YES, fill = BOTH)
+        buttonSs=tkinter.Frame(self, padx = 70, pady = 30)
+        buttonSs.pack(side="bottom", anchor="s", ipady=150, expand = YES, fill = BOTH)
+
+        #버튼 입력창
+        pycurity = Button(titleSs, text="PY-CURITY", height=1, width=10, fg="white",bg="#564898", font=font, relief="flat")
+        pycurity.pack(side = "left", anchor = "center", padx = 600, expand = YES, fill = X)
+
+        start = Button(buttonSs, text="START", height=1, width=10, fg="black",bg="#ec681a", font=font, relief="flat", command=lambda: master.switch_frame(Mmenu))
+        start.pack(side = "left", anchor = "s", padx = 200, expand = YES, fill = X)
+
+        exit = Button(buttonSs, text="EXIT", height=1, width=10, fg="black",bg="#5db134", font=font, relief="flat")
+        exit.pack(side = "left", anchor = "s", padx = 200, expand = YES, fill = X)
+
+class Mmenu(Frame):
+    def __init__(self, master):
+        Frame.__init__(self, master)
+        font = tkinter.font.Font(family="Malgun Gothic", size=40, weight="bold", slant="italic")
+        font2 = tkinter.font.Font(family="Malgun Gothic", size=22, weight="bold", slant="italic")
+
+        #프레임 설정
+        titleMm=tkinter.Frame(self, padx=500)
+        titleMm.pack(side="top", fill="x", expand=True, anchor="n", ipady=70)
+        buttonMm1=tkinter.Frame(self, padx=100, pady=50)
+        buttonMm1.pack(side="top", padx = 100, fill="both", expand=True, anchor="n", pady=10)
+        buttonMm2=tkinter.Frame(self, pady=50)
+        buttonMm2.pack(side="top", fill="both", pady=10)
+        warning=tkinter.Frame(self)
+        warning.pack(side="top", fill="both", expand=True, pady = 100)
+
+        #버튼 입력창
+        options = Button(titleMm, text="OPTIONS", height=1, width=10, fg="black",bg="white", font=font, relief="flat")
+        options.pack(side = "left", anchor = "center", padx = 50, expand = YES, fill = X)
+
+        unzip = Button(buttonMm1, text="UNZIP", height=1, width=10, fg="#564898",bg="white", font=font, relief="flat", command=lambda: master.switch_frame(UnZipper))
+        unzip.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
+
+        backdoor = Button(buttonMm1, text="BACKDOOR", height=1, width=10, fg="#564898",bg="white", font=font, relief="flat", command=lambda: master.switch_frame(Backdoor))
+        backdoor.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
+
+        ddos = Button(buttonMm2, text="D-DOS", height=1, width=10, fg="#564898",bg="white", font=font, relief="flat", command=lambda: master.switch_frame(DDos))
+        ddos.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
+
+        portscan = Button(buttonMm2, text="PORT SCAN", height=1, width=10, fg="#564898",bg="white", font=font, relief="flat", command=lambda: master.switch_frame(PortScan))
+        portscan.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
+
+        ssh = Button(buttonMm2, text="SSH", height=1, width=10, fg="#564898",bg="white", font=font, relief="flat", command=lambda: master.switch_frame(SSH))
+        ssh.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
+
+        #워닝소리
+        labelWarn=tkinter.Label(warning, text="!WARNING:\nUNAUTHORIZED ATTEMPT OF THESE PROTOCOLS MAY CAUSE LEGAL ISSUES DEPENDING ON YOUR COUNTRY'S REGULATIONS.", font=font2, fg="#e9511c")
+        labelWarn.pack(side = "bottom", expand = YES, fill = BOTH)
 
 class UnZipper(Frame):
     def __init__(self, master):
@@ -72,13 +132,13 @@ class UnZipper(Frame):
         init = Button(button, text="INITIALIZE /\nACTIVATE", height=2, width=10, fg="black",bg="#ec6818", font=font, relief="flat")
         init.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
-        pause = Button(button, text="PAUSE /\nBACKDOOR", height=2, width=10, fg="black",bg="#e71b69", font=font, relief="flat", command=lambda: master.switch_frame(PortScan))
+        pause = Button(button, text="PAUSE", height=2, width=10, fg="black",bg="#e71b69", font=font, relief="flat")
         pause.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
         resume = Button(button, text="RESUME", height=2, width=10, fg="black",bg="#ebda1d", font=font, relief="flat")
         resume.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
-        exit = Button(button, text="EXIT /\nTERMINATE", height=2, width=10, fg="black",bg="#5bb137", font=font, relief="flat")
+        exit = Button(button, text="EXIT /\nTERMINATE", height=2, width=10, fg="black",bg="#5bb137", font=font, relief="flat", command=lambda: master.switch_frame(Mmenu))
         exit.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
 class Backdoor(Frame):
@@ -87,15 +147,15 @@ class Backdoor(Frame):
         font = tkinter.font.Font(family="Malgun Gothic", size=40, weight="bold", slant="italic")
 
         #프레임 설정
-        titleBD=tkinter.Frame(self, relief="solid", bd=2)
+        titleBD=tkinter.Frame(self)
         titleBD.pack(side="top", fill="x", expand=True, anchor="n", ipady=40)
-        mainBD=tkinter.Frame(self, relief="solid", bd=2, pady = 100)
+        mainBD=tkinter.Frame(self, pady = 100)
         mainBD.pack(side="top", padx = 100, fill="both", expand=True, anchor="n", pady = 10)
-        ip=tkinter.Frame(mainBD, relief="solid", bd=2)
+        ip=tkinter.Frame(mainBD)
         ip.pack(side="top", fill="both", pady = 50)
-        loading=tkinter.Frame(mainBD, relief="solid", bd=2)
+        loading=tkinter.Frame(mainBD)
         loading.pack(side="top", fill="both", expand=True, pady = 50)
-        button=tkinter.Frame(self, padx = 70, pady = 30, relief="solid", bd=2)
+        button=tkinter.Frame(self, padx = 70, pady = 30)
         button.pack(side="bottom", fill="x")
 
         #title
@@ -133,7 +193,7 @@ class Backdoor(Frame):
         resume = Button(button, text="RESUME", height=1, width=10, fg="black",bg="#ebda1d", font=font, relief="flat")
         resume.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
-        exit = Button(button, text="EXIT /\nTERMINATE", height=1, width=10, fg="black",bg="#5bb137", font=font, relief="flat")
+        exit = Button(button, text="EXIT /\nTERMINATE", height=1, width=10, fg="black",bg="#5bb137", font=font, relief="flat", command=lambda: master.switch_frame(Mmenu))
         exit.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
 class DDos(Frame):
@@ -142,15 +202,15 @@ class DDos(Frame):
         font = tkinter.font.Font(family="Malgun Gothic", size=40, weight="bold", slant="italic")
 
         #프레임 설정
-        title=tkinter.Frame(self, relief="solid", bd=2)
+        title=tkinter.Frame(self)
         title.pack(side="top", fill="x", expand=True, anchor="n", ipady=40)
-        main=tkinter.Frame(self, relief="solid", bd=2, pady = 100)
+        main=tkinter.Frame(self, pady = 100)
         main.pack(side="top", padx = 100, fill="both", expand=True, anchor="n", pady = 10)
-        ip=tkinter.Frame(main, relief="solid", bd=2)
+        ip=tkinter.Frame(main)
         ip.pack(side="top", fill="both", pady = 50)
-        loading=tkinter.Frame(main, relief="solid", bd=2)
+        loading=tkinter.Frame(main)
         loading.pack(side="top", fill="both", expand=True, pady = 50)
-        button=tkinter.Frame(self, padx = 70, pady = 30, relief="solid", bd=2)
+        button=tkinter.Frame(self, padx = 70, pady = 30)
         button.pack(side="bottom", fill="x")
 
         #title
@@ -188,7 +248,7 @@ class DDos(Frame):
         resume = Button(button, text="RESUME", height=1, width=10, fg="black",bg="#ebda1d", font=font, relief="flat")
         resume.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
-        exit = Button(button, text="EXIT /\nTERMINATE", height=1, width=10, fg="black",bg="#5bb137", font=font, relief="flat")
+        exit = Button(button, text="EXIT /\nTERMINATE", height=1, width=10, fg="black",bg="#5bb137", font=font, relief="flat", command=lambda: master.switch_frame(Mmenu))
         exit.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
 class SSH(Frame):
@@ -197,15 +257,15 @@ class SSH(Frame):
         font = tkinter.font.Font(family="Malgun Gothic", size=40, weight="bold", slant="italic")
 
         #프레임 설정
-        titleSSH=tkinter.Frame(self, relief="solid", bd=2)
+        titleSSH=tkinter.Frame(self)
         titleSSH.pack(side="top", fill="x", expand=True, anchor="n", ipady=40)
-        mainSSH=tkinter.Frame(self, relief="solid", bd=2, pady = 100)
+        mainSSH=tkinter.Frame(self, pady = 100)
         mainSSH.pack(side="top", padx = 100, fill="both", expand=True, anchor="n", pady = 10)
-        ip=tkinter.Frame(mainSSH, relief="solid", bd=2)
+        ip=tkinter.Frame(mainSSH)
         ip.pack(side="top", fill="both", pady = 50)
-        loading=tkinter.Frame(mainSSH, relief="solid", bd=2)
+        loading=tkinter.Frame(mainSSH)
         loading.pack(side="top", fill="both", expand=True, pady = 50)
-        button=tkinter.Frame(self, padx = 70, pady = 30, relief="solid", bd=2)
+        button=tkinter.Frame(self, padx = 70, pady = 30)
         button.pack(side="bottom", fill="x")
 
         #title
@@ -243,7 +303,7 @@ class SSH(Frame):
         resume = Button(button, text="RESUME", height=1, width=10, fg="black",bg="#ebda1d", font=font, relief="flat")
         resume.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
-        exit = Button(button, text="EXIT /\nTERMINATE", height=1, width=10, fg="black",bg="#5bb137", font=font, relief="flat")
+        exit = Button(button, text="EXIT /\nTERMINATE", height=1, width=10, fg="black",bg="#5bb137", font=font, relief="flat", command=lambda: master.switch_frame(Mmenu))
         exit.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
 class PortScan(Frame):
@@ -252,15 +312,15 @@ class PortScan(Frame):
         font = tkinter.font.Font(family="Malgun Gothic", size=40, weight="bold", slant="italic")
 
         #프레임 설정
-        titlePS=tkinter.Frame(self, relief="solid", bd=2)
+        titlePS=tkinter.Frame(self)
         titlePS.pack(side="top", fill="x", expand=True, anchor="n", ipady=40)
-        mainPS=tkinter.Frame(self, relief="solid", bd=2, pady = 100)
+        mainPS=tkinter.Frame(self, pady = 100)
         mainPS.pack(side="top", padx = 100, fill="both", expand=True, anchor="n", pady = 10)
-        ip=tkinter.Frame(mainPS, relief="solid", bd=2)
+        ip=tkinter.Frame(mainPS)
         ip.pack(side="top", fill="both", pady = 50)
-        loading=tkinter.Frame(mainPS, relief="solid", bd=2)
+        loading=tkinter.Frame(mainPS)
         loading.pack(side="top", fill="both", expand=True, pady = 50)
-        button=tkinter.Frame(self, padx = 70, pady = 30, relief="solid", bd=2)
+        button=tkinter.Frame(self, padx = 70, pady = 30)
         button.pack(side="bottom", fill="x")
 
         #title
@@ -300,7 +360,7 @@ class PortScan(Frame):
         resume = Button(button, text="RESUME", height=1, width=10, fg="black",bg="#ebda1d", font=font, relief="flat")
         resume.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
-        exit = Button(button, text="EXIT /\nTERMINATE", height=1, width=10, fg="black",bg="#5bb137", font=font, relief="flat")
+        exit = Button(button, text="EXIT /\nTERMINATE", height=1, width=10, fg="black",bg="#5bb137", font=font, relief="flat", command=lambda: master.switch_frame(Mmenu))
         exit.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
 if __name__ == "__main__":
