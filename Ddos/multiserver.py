@@ -1,11 +1,8 @@
 from socket import *
 import threading
 
-def creat_thread(s_socket):
-  global index
-  t.append(Cserver(s_socket))
-  t[index].daemon=True
-  t[index].start()
+t = []
+index = 0
 
 class Cserver(threading.Thread):
   def __init__(self, socket):
@@ -31,31 +28,41 @@ class Cserver(threading.Thread):
   def c_send(self,put_data):
     self.c_socket.send(put_data.encode('utf-8'))
 
-t = []
-index=0
-s_socket = socket(AF_INET, SOCK_STREAM)
-ufsize=1024
-host='182.230.134.78'
-port=12345
-s_socket.bind((host,port))
-s_socket.listen(1)
-creat_thread(s_socket)
+def creat_thread(s_socket):
+  global index
+  t.append(Cserver(s_socket))
+  t[index].daemon=True
+  t[index].start()
 
-while True:
+def start_server():
+  s_socket = socket(AF_INET, SOCK_STREAM)
+  ufsize=1024
+  host='182.230.134.78'
+  port=12345
+  s_socket.bind((host,port))
+  s_socket.listen(1)
+  creat_thread(s_socket)
 
-  put_data = input("서버 입력 : ")
-  if put_data=='1':
-    break
+  while True:
+    put_data = input("서버 입력 : ")
+    if put_data=='1':
+      break
 
-  try:
-    for i in t:
-      i.c_send(put_data)
-  except Exception as e:
-    pass
+    try:
+      for i in t:
+        i.c_send(put_data)
+    except Exception as e:
+      pass
 
-for j in t:
-  try:
-    j.c_socket.close()
-  except Exception as e:
-    pass
-s_socket.close()
+  for j in t:
+    try:
+      j.c_socket.close()
+    except Exception as e:
+      pass
+  s_socket.close()
+
+if __name__ == '__main__':
+  start_server()
+
+
+

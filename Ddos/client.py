@@ -4,7 +4,10 @@ from multiprocessing import Process, Queue
 import requests
 import time
 
-# 클라이언트입니다
+s_socket = socket(AF_INET, SOCK_STREAM)
+bufsize=1024
+host = '182.230.134.78'
+port = 12345
 
 def get_flooding():
   URL = 'http://182.230.134.78:8080' 
@@ -22,11 +25,6 @@ def data_recv() :
       # get_flooding()
     elif(get_data.decode('utf-8') == 'quit'):
       exit()
-
-s_socket = socket(AF_INET, SOCK_STREAM)
-bufsize=1024
-host = '182.230.134.78'
-port = 12345
 
 s_socket.connect((host,port))
 t=threading.Thread(target=data_recv)
