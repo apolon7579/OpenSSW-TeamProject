@@ -3,7 +3,7 @@ from math import *
 import tkinter.font
 import tkinter.ttk
 from tkinter import filedialog
-import os
+from tkinter import messagebox
 
 class SampleApp(Tk):
     def __init__(self):
@@ -57,7 +57,7 @@ class Mmenu(Frame):
         warning.pack(side="top", fill="both", expand=True, pady = 100)
 
         #버튼 입력창
-        options = Button(titleMm, text="OPTIONS", height=1, width=10, fg="black",bg="white", font=font, relief="flat")
+        options = Button(titleMm, text="OPTIONS", height=1, width=10, fg="black",bg="white", font=font, relief="flat", command=lambda: master.switch_frame(Sscreen))
         options.pack(side = "left", anchor = "center", padx = 50, expand = YES, fill = X)
 
         unzip = Button(buttonMm1, text="UNZIP", height=1, width=10, fg="#564898",bg="white", font=font, relief="flat", command=lambda: master.switch_frame(UnZipper))
@@ -107,24 +107,24 @@ class UnZipper(Frame):
         labelTultip.pack(side = "left", expand = YES, fill = BOTH)
 
         #FILE LOCATION 입력창
-        self.labelFL = tkinter.Label(fileLocation, text="", relief="solid", width=10, font=tkinter.font.Font(family="Malgun Gothic", size=20))
+        self.labelFL = tkinter.Label(fileLocation, text="", relief="solid", width=15, bg="white", font=tkinter.font.Font(family="Malgun Gothic", size=20))
         self.labelFL.pack(side = "right", expand = YES, fill = X)
 
         buttonFL=Button(fileLocation, text="FILE LOCATION: ", font=font, command=self.findFL)
         buttonFL.pack(side = "right")
 
         #PASSWORD FILE 입력창
-        self.labelPF = tkinter.Label(passwordFile, text="", relief="solid", width=10, font=tkinter.font.Font(family="Malgun Gothic", size=20))
+        self.labelPF = tkinter.Label(passwordFile, text="", relief="solid", width=15, bg="white", font=tkinter.font.Font(family="Malgun Gothic", size=20))
         self.labelPF.pack(side = "right", expand = YES, fill = X)
 
         buttonPF=Button(passwordFile, text="PASSWORD FILE: ", font=font, command=self.findPF)
         buttonPF.pack(side = "right")
 
         #버튼 입력창
-        init = Button(button, text="INITIALIZE /\nACTIVATE", height=2, width=10, fg="black",bg="#ec6818", font=font, relief="flat")
+        init = Button(button, text="START", height=2, width=10, fg="black",bg="#ec6818", font=font, relief="flat")
         init.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
-        exit = Button(button, text="EXIT /\nTERMINATE", height=2, width=10, fg="black",bg="#5bb137", font=font, relief="flat", command=lambda: master.switch_frame(Mmenu))
+        exit = Button(button, text="EXIT", height=2, width=10, fg="black",bg="#5bb137", font=font, relief="flat", command=lambda: master.switch_frame(Mmenu))
         exit.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
     def findFL(self):
@@ -144,10 +144,10 @@ class Backdoor(Frame):
         titleBD.pack(side="top", fill="x", expand=True, anchor="n", ipady=40)
         mainBD=tkinter.Frame(self, pady = 100)
         mainBD.pack(side="top", padx = 100, fill="both", expand=True, anchor="n", pady = 10)
-        ip=tkinter.Frame(mainBD)
-        ip.pack(side="top", fill="both", pady = 50)
-        loading=tkinter.Frame(mainBD)
-        loading.pack(side="top", fill="both", expand=True, pady = 50)
+        ipBD=tkinter.Frame(mainBD)
+        ipBD.pack(side="top", fill="both", pady = 50)
+        portBD=tkinter.Frame(mainBD)
+        portBD.pack(side="top", fill="both", expand=True, pady = 50)
         button=tkinter.Frame(self, padx = 70, pady = 30)
         button.pack(side="bottom", fill="x")
 
@@ -160,36 +160,26 @@ class Backdoor(Frame):
         labelTultip.pack(side = "left", expand = YES, fill = BOTH)
 
         #ip 입력창
-        entry = Entry(ip, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
+        entry = Entry(ipBD, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
         entry.pack(side = "right", expand = YES, fill = X)
 
-        labelIp=tkinter.Label(ip, text="IP: ", font=font)
+        labelIp=tkinter.Label(ipBD, text="IP: ", font=font)
         labelIp.pack(side = "right")
 
-        #프로그레스 바
-        labelFin=tkinter.Label(loading, text="INSTALLATION COMPLETE!")
-        labelFin.pack(side="top", anchor = "e")
-        pb = tkinter.ttk.Progressbar(loading, maximum=100, mode="determinate")
-        pb.pack(expand = YES, fill = BOTH)                       # 프로그래스 바 배치
-        label0=tkinter.Label(loading, text="0%", font=font)
-        label0.pack(side="left")
-        label100=tkinter.Label(loading, text="100%", font=font)
-        label100.pack(side="right")
+        entry2 = Entry(portBD, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
+        entry2.pack(side = "right", expand = YES, fill = X)
+
+        labelPort=tkinter.Label(portBD, text="PORT: ", font=font)
+        labelPort.pack(side = "right")
 
         #버튼 입력창
-        init = Button(button, text="INITIALIZE /\nACTIVATE", height=1, width=10, fg="black",bg="#ec6818", font=font, relief="flat")
+        init = Button(button, text="START", height=1, width=10, fg="black",bg="#ec6818", font=font, relief="flat")
         init.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
-        pause = Button(button, text="PAUSE", height=1, width=10, fg="black",bg="#e71b69", font=font, relief="flat")
-        pause.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
-
-        resume = Button(button, text="RESUME", height=1, width=10, fg="black",bg="#ebda1d", font=font, relief="flat")
-        resume.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
-
-        exit = Button(button, text="EXIT /\nTERMINATE", height=1, width=10, fg="black",bg="#5bb137", font=font, relief="flat", command=lambda: master.switch_frame(Mmenu))
+        exit = Button(button, text="EXIT", height=1, width=10, fg="black",bg="#5bb137", font=font, relief="flat", command=lambda: master.switch_frame(Mmenu))
         exit.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
-class DDos(Frame):
+class DDos(Frame): #start 버튼을 누르면 공격중이라는 팝업이 떴으면 좋겠음 팝업을 끄면 공격이 중지되는 방식으로 작동
     def __init__(self, master):
         Frame.__init__(self, master)
         font = tkinter.font.Font(family="Malgun Gothic", size=40, weight="bold", slant="italic")
@@ -201,8 +191,8 @@ class DDos(Frame):
         main.pack(side="top", padx = 100, fill="both", expand=True, anchor="n", pady = 10)
         ip=tkinter.Frame(main)
         ip.pack(side="top", fill="both", pady = 50)
-        loading=tkinter.Frame(main)
-        loading.pack(side="top", fill="both", expand=True, pady = 50)
+        port=tkinter.Frame(main)
+        port.pack(side="top", fill="both", expand=True, pady = 50)
         button=tkinter.Frame(self, padx = 70, pady = 30)
         button.pack(side="bottom", fill="x")
 
@@ -221,30 +211,23 @@ class DDos(Frame):
         labelIp=tkinter.Label(ip, text="IP: ", font=font)
         labelIp.pack(side = "right")
 
-        #프로그레스 바
-        labelFin=tkinter.Label(loading, text="INITIATING COMPLETE!")
-        labelFin.pack(side="top", anchor = "e")
-        pb = tkinter.ttk.Progressbar(loading, maximum=100, mode="determinate")
-        pb.pack(expand = YES, fill = BOTH)                       # 프로그래스 바 배치
-        label0=tkinter.Label(loading, text="0%", font=font)
-        label0.pack(side="left")
-        label100=tkinter.Label(loading, text="100%", font=font)
-        label100.pack(side="right")
+        entry2 = Entry(port, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
+        entry2.pack(side = "right", expand = YES, fill = X)
+
+        labelPort=tkinter.Label(port, text="PORT: ", font=font)
+        labelPort.pack(side = "right")
 
         #버튼 입력창
-        init = Button(button, text="INITIALIZE /\nACTIVATE", height=1, width=10, fg="black",bg="#ec6818", font=font, relief="flat")
+        init = Button(button, text="START", height=1, width=10, fg="black",bg="#ec6818", font=font, relief="flat", command=self.start)
         init.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
-        pause = Button(button, text="PAUSE", height=1, width=10, fg="black",bg="#e71b69", font=font, relief="flat")
-        pause.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
-
-        resume = Button(button, text="RESUME", height=1, width=10, fg="black",bg="#ebda1d", font=font, relief="flat")
-        resume.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
-
-        exit = Button(button, text="EXIT /\nTERMINATE", height=1, width=10, fg="black",bg="#5bb137", font=font, relief="flat", command=lambda: master.switch_frame(Mmenu))
+        exit = Button(button, text="EXIT", height=1, width=10, fg="black",bg="#5bb137", font=font, relief="flat", command=lambda: master.switch_frame(Mmenu))
         exit.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
-class SSH(Frame):
+    def start():
+        messagebox.showinfo("알림창", "알림창이 떴습니다")
+
+class SSH(Frame): #password File이란 이름으로 file selector 추가
     def __init__(self, master):
         Frame.__init__(self, master)
         font = tkinter.font.Font(family="Malgun Gothic", size=40, weight="bold", slant="italic")
@@ -254,10 +237,12 @@ class SSH(Frame):
         titleSSH.pack(side="top", fill="x", expand=True, anchor="n", ipady=40)
         mainSSH=tkinter.Frame(self, pady = 100)
         mainSSH.pack(side="top", padx = 100, fill="both", expand=True, anchor="n", pady = 10)
-        ip=tkinter.Frame(mainSSH)
-        ip.pack(side="top", fill="both", pady = 50)
-        loading=tkinter.Frame(mainSSH)
-        loading.pack(side="top", fill="both", expand=True, pady = 50)
+        ipSSH=tkinter.Frame(mainSSH)
+        ipSSH.pack(side="top", fill="both", pady = 40)
+        portSSH=tkinter.Frame(mainSSH)
+        portSSH.pack(side="top", fill="both", expand=True, pady = 40)
+        password_File=tkinter.Frame(mainSSH)
+        password_File.pack(side="top", fill="both", expand=True, pady = 40)
         button=tkinter.Frame(self, padx = 70, pady = 30)
         button.pack(side="bottom", fill="x")
 
@@ -270,34 +255,35 @@ class SSH(Frame):
         labelTultip.pack(side = "left", expand = YES, fill = BOTH)
 
         #ip 입력창
-        entry = Entry(ip, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
+        entry = Entry(ipSSH, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
         entry.pack(side = "right", expand = YES, fill = X)
 
-        labelIp=tkinter.Label(ip, text="IP: ", font=font)
+        labelIp=tkinter.Label(ipSSH, text="IP: ", font=font)
         labelIp.pack(side = "right")
 
-        #프로그레스 바
-        labelFin=tkinter.Label(loading, text="INITIATING COMPLETE!")
-        labelFin.pack(side="top", anchor = "e")
-        pb = tkinter.ttk.Progressbar(loading, maximum=100, mode="determinate")
-        pb.pack(expand = YES, fill = BOTH)                       # 프로그래스 바 배치
-        label0=tkinter.Label(loading, text="0%", font=font)
-        label0.pack(side="left")
-        label100=tkinter.Label(loading, text="100%", font=font)
-        label100.pack(side="right")
+        entry2 = Entry(portSSH, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
+        entry2.pack(side = "right", expand = YES, fill = X)
+
+        labelPort=tkinter.Label(portSSH, text="PORT: ", font=font)
+        labelPort.pack(side = "right")
+
+        #password file 입력창
+        self.labelPF = tkinter.Label(password_File, text="", relief="solid", width=15, bg="white", font=tkinter.font.Font(family="Malgun Gothic", size=20))
+        self.labelPF.pack(side = "right", expand = YES, fill = X)
+
+        buttonFL=Button(password_File, text="PASSWORD FILE: ", font=font, command=self.findPF)
+        buttonFL.pack(side = "right")
 
         #버튼 입력창
-        init = Button(button, text="INITIALIZE /\nACTIVATE", height=1, width=10, fg="black",bg="#ec6818", font=font, relief="flat")
+        init = Button(button, text="START", height=1, width=10, fg="black",bg="#ec6818", font=font, relief="flat")
         init.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
-        pause = Button(button, text="PAUSE", height=1, width=10, fg="black",bg="#e71b69", font=font, relief="flat")
-        pause.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
-
-        resume = Button(button, text="RESUME", height=1, width=10, fg="black",bg="#ebda1d", font=font, relief="flat")
-        resume.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
-
-        exit = Button(button, text="EXIT /\nTERMINATE", height=1, width=10, fg="black",bg="#5bb137", font=font, relief="flat", command=lambda: master.switch_frame(Mmenu))
+        exit = Button(button, text="EXIT", height=1, width=10, fg="black",bg="#5bb137", font=font, relief="flat", command=lambda: master.switch_frame(Mmenu))
         exit.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
+
+    def findPF(self):
+        fname = filedialog.askopenfile(mode='w', filetypes=[('Txt Files', '*.txt')])
+        self.labelPF.configure(text=format(fname))
 
 class PortScan(Frame):
     def __init__(self, master):
@@ -309,10 +295,10 @@ class PortScan(Frame):
         titlePS.pack(side="top", fill="x", expand=True, anchor="n", ipady=40)
         mainPS=tkinter.Frame(self, pady = 100)
         mainPS.pack(side="top", padx = 100, fill="both", expand=True, anchor="n", pady = 10)
-        ip=tkinter.Frame(mainPS)
-        ip.pack(side="top", fill="both", pady = 50)
-        loading=tkinter.Frame(mainPS)
-        loading.pack(side="top", fill="both", expand=True, pady = 50)
+        ipPS=tkinter.Frame(mainPS)
+        ipPS.pack(side="top", fill="both", pady = 50)
+        portPS=tkinter.Frame(mainPS)
+        portPS.pack(side="top", fill="both", expand=True, pady = 50)
         button=tkinter.Frame(self, padx = 70, pady = 30)
         button.pack(side="bottom", fill="x")
 
@@ -325,35 +311,23 @@ class PortScan(Frame):
         labelTultip.pack(side = "left", expand = YES, fill = BOTH)
 
         #ip 입력창
-        entry = Entry(ip, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
+        entry = Entry(ipPS, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
         entry.pack(side = "right", expand = YES, fill = X)
 
-        labelIp=tkinter.Label(ip, text="IP: ", font=font)
+        labelIp=tkinter.Label(ipPS, text="IP: ", font=font)
         labelIp.pack(side = "right")
 
-        #프로그레스 바
-        labelFin=tkinter.Label(loading, text="SCANNING COMPLETE!")
-        labelFin.pack(side="top", anchor = "e")
-        pb = tkinter.ttk.Progressbar(loading, maximum=100, mode="determinate")
-        pb.pack(expand = YES, fill = BOTH)                       # 프로그래스 바 배치
-        label0=tkinter.Label(loading, text="0%", font=font)
-        label0.pack(side="left")
-        label100=tkinter.Label(loading, text="100%", font=font)
-        label100.pack(side="right")
-        labelResult=tkinter.Label(loading, text="VULNERABLE/OPEN PORT NO.:", font=font, fg="red") #결과값 출력(변수 부분은 비워두었습니다.)
-        labelResult.pack(side="bottom", anchor = "n")
+        entry2 = Entry(portPS, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
+        entry2.pack(side = "right", expand = YES, fill = X)
+
+        labelPort=tkinter.Label(portPS, text="PORT: ", font=font)
+        labelPort.pack(side = "right")
 
         #버튼 입력창
-        init = Button(button, text="INITIALIZE /\nACTIVATE", height=1, width=10, fg="black",bg="#ec6818", font=font, relief="flat")
+        init = Button(button, text="START", height=1, width=10, fg="black",bg="#ec6818", font=font, relief="flat")
         init.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
-        pause = Button(button, text="PAUSE", height=1, width=10, fg="black",bg="#e71b69", font=font, relief="flat")
-        pause.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
-
-        resume = Button(button, text="RESUME", height=1, width=10, fg="black",bg="#ebda1d", font=font, relief="flat")
-        resume.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
-
-        exit = Button(button, text="EXIT /\nTERMINATE", height=1, width=10, fg="black",bg="#5bb137", font=font, relief="flat", command=lambda: master.switch_frame(Mmenu))
+        exit = Button(button, text="EXIT", height=1, width=10, fg="black",bg="#5bb137", font=font, relief="flat", command=lambda: master.switch_frame(Mmenu))
         exit.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
 if __name__ == "__main__":
