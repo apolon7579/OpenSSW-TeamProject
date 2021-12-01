@@ -2,6 +2,8 @@ from tkinter import *
 from math import *
 import tkinter.font
 import tkinter.ttk
+from tkinter import filedialog
+import os
 
 class SampleApp(Tk):
     def __init__(self):
@@ -105,41 +107,32 @@ class UnZipper(Frame):
         labelTultip.pack(side = "left", expand = YES, fill = BOTH)
 
         #FILE LOCATION 입력창
-        entryLocation = Entry(fileLocation, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
-        entryLocation.pack(side = "right", expand = YES, fill = X)
+        self.labelFL = tkinter.Label(fileLocation, text="", relief="solid", width=10, font=tkinter.font.Font(family="Malgun Gothic", size=20))
+        self.labelFL.pack(side = "right", expand = YES, fill = X)
 
-        labelFL=tkinter.Label(fileLocation, text="FILE LOCATION: ", font=font)
-        labelFL.pack(side = "right")
+        buttonFL=Button(fileLocation, text="FILE LOCATION: ", font=font, command=self.findFL)
+        buttonFL.pack(side = "right")
 
         #PASSWORD FILE 입력창
-        entryFile = Entry(passwordFile, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
-        entryFile.pack(side = "right", expand = YES, fill = X)
+        self.labelPF = tkinter.Label(passwordFile, text="", relief="solid", width=10, font=tkinter.font.Font(family="Malgun Gothic", size=20))
+        self.labelPF.pack(side = "right", expand = YES, fill = X)
 
-        labelPF=tkinter.Label(passwordFile, text="PASSWORD FILE: ", font=font)
-        labelPF.pack(side = "right")
-
-        #프로그레스 바
-        labelFin=tkinter.Label(loading, text="INSTALLATION COMPLETE!")
-        labelFin.pack(side="top", anchor = "e")
-        pb = tkinter.ttk.Progressbar(loading, maximum=100, mode="determinate")
-        pb.pack(expand = YES, fill = BOTH)                       # 프로그래스 바 배치
-        label0=tkinter.Label(loading, text="0%", font=font)
-        label0.pack(side="left")
-        label100=tkinter.Label(loading, text="100%", font=font)
-        label100.pack(side="right")
+        buttonPF=Button(passwordFile, text="PASSWORD FILE: ", font=font, command=self.findPF)
+        buttonPF.pack(side = "right")
 
         #버튼 입력창
         init = Button(button, text="INITIALIZE /\nACTIVATE", height=2, width=10, fg="black",bg="#ec6818", font=font, relief="flat")
         init.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
-        pause = Button(button, text="PAUSE", height=2, width=10, fg="black",bg="#e71b69", font=font, relief="flat")
-        pause.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
-
-        resume = Button(button, text="RESUME", height=2, width=10, fg="black",bg="#ebda1d", font=font, relief="flat")
-        resume.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
-
         exit = Button(button, text="EXIT /\nTERMINATE", height=2, width=10, fg="black",bg="#5bb137", font=font, relief="flat", command=lambda: master.switch_frame(Mmenu))
         exit.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
+
+    def findFL(self):
+        fname = filedialog.askopenfile(mode='w', filetypes=[('Zip Files', '*.zip')])
+        self.labelFL.configure(text=format(fname))
+    def findPF(self):
+        fname = filedialog.askopenfile(mode='w', filetypes=[('Txt Files', '*.txt')])
+        self.labelPF.configure(text=format(fname))
 
 class Backdoor(Frame):
     def __init__(self, master):
