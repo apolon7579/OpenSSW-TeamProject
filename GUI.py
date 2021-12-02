@@ -193,6 +193,8 @@ class DDos(Frame): #start 버튼을 누르면 공격중이라는 팝업이 떴�
         ip.pack(side="top", fill="both", pady = 50)
         port=tkinter.Frame(main)
         port.pack(side="top", fill="both", expand=True, pady = 50)
+        status=tkinter.Frame(main)
+        status.pack(side="top", fill="both", expand=True, pady = 10)
         button=tkinter.Frame(self, padx = 70, pady = 30)
         button.pack(side="bottom", fill="x")
 
@@ -217,15 +219,23 @@ class DDos(Frame): #start 버튼을 누르면 공격중이라는 팝업이 떴�
         labelPort=tkinter.Label(port, text="PORT: ", font=font)
         labelPort.pack(side = "right")
 
+        self.labelStat=tkinter.Label(status, text="", font=font, fg="red")
+        self.labelStat.pack(side = "bottom")
+
         #버튼 입력창
-        init = Button(button, text="START", height=1, width=10, fg="black",bg="#ec6818", font=font, relief="flat", command=self.start)
+        init = Button(button, text="START", height=1, width=10, fg="black",bg="#ec6818", font=font, relief="flat", command=self.textAttack)
         init.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
+
+        stop = Button(button, text="STOP", height=1, width=10, fg="black",bg="#ec6818", font=font, relief="flat", command=self.textStop)
+        stop.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
         exit = Button(button, text="EXIT", height=1, width=10, fg="black",bg="#5bb137", font=font, relief="flat", command=lambda: master.switch_frame(Mmenu))
         exit.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
-    def start():
-        messagebox.showinfo("알림창", "알림창이 떴습니다")
+    def textAttack(self):
+        self.labelStat.configure(text="ATTACKING...")
+    def textStop(self):
+        self.labelStat.configure(text="")
 
 class SSH(Frame): #password File이란 이름으로 file selector 추가
     def __init__(self, master):
