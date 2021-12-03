@@ -3,7 +3,7 @@ from math import *
 import tkinter.font
 import tkinter.ttk
 from tkinter import filedialog
-from tkinter import messagebox
+from port_scan import port_scanner
 
 class SampleApp(Tk):
     def __init__(self):
@@ -320,25 +320,28 @@ class PortScan(Frame):
         labelTultip=tkinter.Label(titlePS, text="SCANNING IF THERE'S ANY OPEN PORT", height=1, width=46, font=font, bg="#564898", fg="#cac4e2")
         labelTultip.pack(side = "left", expand = YES, fill = BOTH)
 
-        #ip 입력창
-        entry = Entry(ipPS, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
-        entry.pack(side = "right", expand = YES, fill = X)
+        #ip, port 입력창
+        self.entry = Entry(ipPS, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
+        self.entry.pack(side = "right", expand = YES, fill = X)
 
         labelIp=tkinter.Label(ipPS, text="IP: ", font=font)
         labelIp.pack(side = "right")
 
-        entry2 = Entry(portPS, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
-        entry2.pack(side = "right", expand = YES, fill = X)
+        self.entry2 = Entry(portPS, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
+        self.entry2.pack(side = "right", expand = YES, fill = X)
 
         labelPort=tkinter.Label(portPS, text="PORT: ", font=font)
         labelPort.pack(side = "right")
 
         #버튼 입력창
-        init = Button(button, text="START", height=1, width=10, fg="black",bg="#ec6818", font=font, relief="flat")
+        init = Button(button, text="START", height=1, width=10, fg="black",bg="#ec6818", font=font, relief="flat", command=self.scanPS)
         init.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
         exit = Button(button, text="EXIT", height=1, width=10, fg="black",bg="#5bb137", font=font, relief="flat", command=lambda: master.switch_frame(Mmenu))
         exit.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
+    
+    def scanPS(self): #함수를 command 안에 그냥 넣으면 이상하게 에러가 나서 scanPS 안에 가둬놨습니다
+        port_scanner.portScan(self.entry.get(), self.entry2.get())
 
 if __name__ == "__main__":
     app = SampleApp()
