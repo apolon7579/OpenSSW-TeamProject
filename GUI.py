@@ -94,13 +94,13 @@ class UnZipper(Frame):
         titleUZ=tkinter.Frame(self)
         titleUZ.pack(side="top", fill="x", expand=True, anchor="n", ipady=40)
         mainUZ=tkinter.Frame(self, pady = 80)
-        mainUZ.pack(side="top", padx = 100, fill="both", expand=True, anchor="n", pady = 10)
+        mainUZ.pack(side="top", padx = 100, fill="both", expand=True, anchor="n", pady = 40)
         fileLocation=tkinter.Frame(mainUZ, pady = 10)
         fileLocation.pack(side="top", fill="both")
         passwordFile=tkinter.Frame(mainUZ, pady = 10)
         passwordFile.pack(side="top", fill="both")
-        loading=tkinter.Frame(mainUZ)
-        loading.pack(side="top", fill="both", expand=True, pady = 20)
+        result=tkinter.Frame(mainUZ, pady = 40)
+        result.pack(side="top", fill="both", expand=True)
         button=tkinter.Frame(self, padx = 70, pady = 30)
         button.pack(side="bottom", fill="x")
 
@@ -125,6 +125,10 @@ class UnZipper(Frame):
 
         buttonPF=Button(passwordFile, text="PASSWORD FILE: ", font=font, command=self.findPF)
         buttonPF.pack(side = "right")
+
+        #압축파일 비밀번호 라벨
+        self.labelResult=tkinter.Label(result, text="PASSWORD IS: ", font=font, fg="red")
+        self.labelResult.pack(side = "bottom")
 
         #버튼 입력창
         init = Button(button, text="START", height=2, width=10, fg="black",bg="#ec6818", font=font, relief="flat", command=self.unzip_attack)
@@ -282,16 +286,18 @@ class SSH(Frame): #password File이란 이름으로 file selector 추가
 
         #프레임 설정
         titleSSH=tkinter.Frame(self)
-        titleSSH.pack(side="top", fill="x", expand=True, anchor="n", ipady=40)
+        titleSSH.pack(side="top", fill="x", expand=True, anchor="n", ipady=30)
         mainSSH=tkinter.Frame(self, pady = 100)
         mainSSH.pack(side="top", padx = 100, fill="both", expand=True, anchor="n", pady = 10)
         ipSSH=tkinter.Frame(mainSSH)
-        ipSSH.pack(side="top", fill="both", pady = 40)
+        ipSSH.pack(side="top", fill="both", pady = 30)
         portSSH=tkinter.Frame(mainSSH)
-        portSSH.pack(side="top", fill="both", expand=True, pady = 40)
+        portSSH.pack(side="top", fill="both", expand=True, pady = 30)
         password_File=tkinter.Frame(mainSSH)
-        password_File.pack(side="top", fill="both", expand=True, pady = 40)
-        button=tkinter.Frame(self, padx = 70, pady = 30)
+        password_File.pack(side="top", fill="both", expand=True, pady = 30)
+        result=tkinter.Frame(mainSSH)
+        result.pack(side="top", fill="both", expand=True)
+        button=tkinter.Frame(self, padx = 70, pady = 20)
         button.pack(side="bottom", fill="x")
 
         #title
@@ -322,6 +328,10 @@ class SSH(Frame): #password File이란 이름으로 file selector 추가
 
         buttonFL=Button(password_File, text="PASSWORD FILE: ", font=font, command=self.findPF)
         buttonFL.pack(side = "right")
+
+        #SSH 비밀번호 라벨
+        self.labelResult=tkinter.Label(result, text="SSH PASSWORD: ", font=font, fg="red")
+        self.labelResult.pack(side = "bottom")
 
         #버튼 입력창
         init = Button(button, text="START", height=1, width=10, fg="black",bg="#ec6818", font=font, relief="flat", command=self.ssh_attack)
@@ -356,12 +366,13 @@ class PortScan(Frame):
         titlePS=tkinter.Frame(self)
         titlePS.pack(side="top", fill="x", expand=True, anchor="n", ipady=40)
         mainPS=tkinter.Frame(self, pady = 100)
-
         mainPS.pack(side="top", padx = 100, fill="both", expand=True, anchor="n", pady = 10)
         ipPS=tkinter.Frame(mainPS)
         ipPS.pack(side="top", fill="both", pady = 50)
         portPS=tkinter.Frame(mainPS)
         portPS.pack(side="top", fill="both", expand=True, pady = 50)
+        result=tkinter.Frame(mainPS)
+        result.pack(side="top", fill="both", expand=True)
         button=tkinter.Frame(self, padx = 70, pady = 30)
         button.pack(side="bottom", fill="x")
 
@@ -385,6 +396,10 @@ class PortScan(Frame):
 
         labelPort=tkinter.Label(portPS, text="PORT: ", font=font)
         labelPort.pack(side = "right")
+
+        #PORT 오픈 여부 라벨
+        self.labelResult=tkinter.Label(result, text="PORT IS: ", font=font, fg="red")
+        self.labelResult.pack(side = "bottom")
 
         #버튼 입력창
         init = Button(button, text="START", height=1, width=10, fg="black",bg="#ec6818", font=font, relief="flat", command=self.scanPS)
