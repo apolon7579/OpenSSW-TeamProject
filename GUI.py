@@ -4,6 +4,7 @@ import tkinter.font
 import tkinter.ttk
 from tkinter import filedialog
 from port_scan import port_scanner
+from ssh import ssh_dictionary
 
 class SampleApp(Tk):
     def __init__(self):
@@ -128,11 +129,13 @@ class UnZipper(Frame):
         exit.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
     def findFL(self):
-        fname = filedialog.askopenfile(mode='w', filetypes=[('Zip Files', '*.zip')])
+        fname = filedialog.askopenfile(mode='r', filetypes=[('Zip Files', '*.zip')])
         self.labelFL.configure(text=format(fname))
+        fname.close()
     def findPF(self):
-        fname = filedialog.askopenfile(mode='w', filetypes=[('Txt Files', '*.txt')])
+        fname = filedialog.askopenfile(mode='r', filetypes=[('Txt Files', '*.txt')])
         self.labelPF.configure(text=format(fname))
+        fname.close()
 
 class Backdoor(Frame):
     def __init__(self, master):
@@ -264,17 +267,18 @@ class SSH(Frame): #password File이란 이름으로 file selector 추가
         labelTultip=tkinter.Label(titleSSH, text="INITIATE SSH BRUTE FORCE PROTOCOL", height=1, width=46, font=font, bg="#564898", fg="#cac4e2")
         labelTultip.pack(side = "left", expand = YES, fill = BOTH)
 
-        #ip 입력창
-        entry = Entry(ipSSH, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
-        entry.pack(side = "right", expand = YES, fill = X)
+        #ip 값
+        self.entry = Entry(ipSSH, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
+        self.entry.pack(side = "right", expand = YES, fill = X)
 
         labelIp=tkinter.Label(ipSSH, text="IP: ", font=font)
         labelIp.pack(side = "right")
 
-        entry2 = Entry(portSSH, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
-        entry2.pack(side = "right", expand = YES, fill = X)
+        #userId 값
+        self.entry2 = Entry(portSSH, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
+        self.entry2.pack(side = "right", expand = YES, fill = X)
 
-        labelPort=tkinter.Label(portSSH, text="PORT: ", font=font)
+        labelPort=tkinter.Label(portSSH, text="USER ID : ", font=font)
         labelPort.pack(side = "right")
 
         #password file 입력창
@@ -285,15 +289,28 @@ class SSH(Frame): #password File이란 이름으로 file selector 추가
         buttonFL.pack(side = "right")
 
         #버튼 입력창
-        init = Button(button, text="START", height=1, width=10, fg="black",bg="#ec6818", font=font, relief="flat")
+        init = Button(button, text="START", height=1, width=10, fg="black",bg="#ec6818", font=font, relief="flat", command=self.ssh_attack)
         init.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
         exit = Button(button, text="EXIT", height=1, width=10, fg="black",bg="#5bb137", font=font, relief="flat", command=lambda: master.switch_frame(Mmenu))
         exit.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
+        self.filepath = ""
+
     def findPF(self):
-        fname = filedialog.askopenfile(mode='w', filetypes=[('Txt Files', '*.txt')])
-        self.labelPF.configure(text=format(fname))
+        fname = filedialog.askopenfile(mode='r', filetypes=[('Txt Files', '*.txt')])
+        self.labelPF.configure(text=format(fname.name))
+        self.filepath = fname.name
+        fname.close()
+    def ssh_attack(self):
+        host = self.entry.get()
+        user = self.entry2.get()
+        file_path = self.filepath
+        file_path_replaced = file_path.replace("\\", "/", 10)
+        print(host)
+        print(user)
+        ssh_dictionary.pass_find(file_path_replaced,host, user)
+        
 
 class PortScan(Frame):
     def __init__(self, master):
