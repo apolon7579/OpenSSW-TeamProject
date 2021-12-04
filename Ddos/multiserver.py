@@ -1,8 +1,10 @@
 from socket import *
 import threading
+import time
 
 t = []
 index = 0
+put_data = "wait..."
 
 class Cserver(threading.Thread):
   def __init__(self, socket):
@@ -44,7 +46,7 @@ def start_server():
   creat_thread(s_socket)
 
   while True:
-    put_data = input("서버 입력 : ")
+    time.sleep(3)
     if put_data=='1':
       break
 

