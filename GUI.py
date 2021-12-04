@@ -341,7 +341,7 @@ class PortScan(Frame):
         exit.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
     
     def scanPS(self): #함수를 command 안에 그냥 넣으면 이상하게 에러가 나서 scanPS 안에 가둬놨습니다
-        port_scanner.portScan(self.entry.get(), self.entry2.get())
+        port_scanner.connScan(self.entry.get(), int(self.entry2.get()))
 
 if __name__ == "__main__":
     app = SampleApp()
