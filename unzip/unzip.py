@@ -9,6 +9,13 @@ def extractFile(zFile, password):                                               
         print('[+] Password = ' + password + "\n")
     except Exception as e:                                                                                       # 에러가 나면 그냥 끝냄
         pass
+
+def zipdict_attack(zFile, passFile):
+    for line in passFile.readlines():
+        password = line.strip('\n')
+        t = Thread(target=extractFile, args=(zFile, password))
+        t.start()
+
 def main():
     parser = optparse.OptionParser("usage%prog " + "-f <zipfile> -d <dictionary>")                          # 프로그램 메인 실행 로직 zip파일이랑 dictinoary를 인자로 받아야 된다는걸 알림
     parser.add_option("-f", dest="zname", type="string", help="specify zip file")                           # f 옵션은 zname 변수로 저장되며 zipfile 의미
