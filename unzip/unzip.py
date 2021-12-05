@@ -3,10 +3,15 @@ import zipfile
 import optparse
 import os
 from threading import Thread
+
+passwd = ""
+
 def extractFile(zFile, password):                                                                           # zip파일이랑 패스워드를 인자로 받아서 압축을 해제하는 함수
     try:
         zFile.extractall(pwd=password.encode())
         print('[+] Password = ' + password + "\n")
+        global passwd
+        passwd = password
     except Exception as e:                                                                                       # 에러가 나면 그냥 끝냄
         pass
 

@@ -158,13 +158,14 @@ class UnZipper(Frame):
         zip_path = zip_path.replace("\\", "/", 10)
         pass_path = pass_path.replace("\\", "/", 10)
 
-        #print(zip_path)
-        #print(pass_path)
-
         zfile = ZipFile(zip_path)
         passFile = open(pass_path)
         unzip.zipdict_attack(zfile, passFile)
         passFile.close()
+        
+        text_pwd = "PASSWORD IS : " + unzip.passwd
+        self.labelResult.configure(text=text_pwd)
+
 
 class Backdoor(Frame):
     def __init__(self, master):
@@ -354,7 +355,7 @@ class SSH(Frame): #password File이란 이름으로 file selector 추가
         file_path_replaced = file_path.replace("\\", "/", 10)
         print(host)
         print(user)
-        ssh_dictionary.pass_find(file_path_replaced,host, user)
+        ssh_dictionary.pass_find2(file_path_replaced,host, user)
         
 
 class PortScan(Frame):
@@ -409,7 +410,8 @@ class PortScan(Frame):
         exit.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
     
     def scanPS(self): #함수를 command 안에 그냥 넣으면 이상하게 에러가 나서 scanPS 안에 가둬놨습니다
-        port_scanner.connScan(self.entry.get(), int(self.entry2.get()))
+        msg = port_scanner.connScan(self.entry.get(), int(self.entry2.get()))
+        self.labelResult.configure(text = msg)
 
 if __name__ == "__main__":
     t = threading.Thread(target=multiserver.start_server)
