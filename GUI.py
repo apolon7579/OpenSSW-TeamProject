@@ -5,7 +5,6 @@ import tkinter.ttk
 from tkinter import filedialog
 from zipfile import ZipFile
 from port_scan import port_scanner
-from ssh import ssh_dictionary
 from unzip import unzip
 from Ddos import multiserver
 import threading
@@ -53,12 +52,10 @@ class Mmenu(Frame):
         font2 = tkinter.font.Font(family="Malgun Gothic", size=22, weight="bold", slant="italic")
 
         #프레임 설정
-        titleMm=tkinter.Frame(self, padx=500)
+        titleMm=tkinter.Frame(self, padx=500, pady=100)
         titleMm.pack(side="top", fill="x", expand=True, anchor="n", ipady=70)
-        buttonMm1=tkinter.Frame(self, padx=100, pady=50)
-        buttonMm1.pack(side="top", padx = 100, fill="both", expand=True, anchor="n", pady=10)
-        buttonMm2=tkinter.Frame(self, pady=50)
-        buttonMm2.pack(side="top", fill="both", pady=10)
+        buttonMm=tkinter.Frame(self, padx=100, pady=100)
+        buttonMm.pack(side="top", padx = 100, fill="both", expand=True, anchor="n", pady=10)
         warning=tkinter.Frame(self)
         warning.pack(side="top", fill="both", expand=True, pady = 100)
 
@@ -66,20 +63,14 @@ class Mmenu(Frame):
         options = Button(titleMm, text="OPTIONS", height=1, width=10, fg="black",bg="white", font=font, relief="flat", command=lambda: master.switch_frame(Sscreen))
         options.pack(side = "left", anchor = "center", padx = 50, expand = YES, fill = X)
 
-        unzip = Button(buttonMm1, text="UNZIP", height=1, width=10, fg="#564898",bg="white", font=font, relief="flat", command=lambda: master.switch_frame(UnZipper))
+        unzip = Button(buttonMm, text="UNZIP", height=1, width=10, fg="#564898",bg="white", font=font, relief="flat", command=lambda: master.switch_frame(UnZipper))
         unzip.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
-        backdoor = Button(buttonMm1, text="BACKDOOR", height=1, width=10, fg="#564898",bg="white", font=font, relief="flat", command=lambda: master.switch_frame(Backdoor))
-        backdoor.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
-
-        ddos = Button(buttonMm2, text="D-DOS", height=1, width=10, fg="#564898",bg="white", font=font, relief="flat", command=lambda: master.switch_frame(DDos))
+        ddos = Button(buttonMm, text="D-DOS", height=1, width=10, fg="#564898",bg="white", font=font, relief="flat", command=lambda: master.switch_frame(DDos))
         ddos.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
-        portscan = Button(buttonMm2, text="PORT SCAN", height=1, width=10, fg="#564898",bg="white", font=font, relief="flat", command=lambda: master.switch_frame(PortScan))
+        portscan = Button(buttonMm, text="PORT SCAN", height=1, width=10, fg="#564898",bg="white", font=font, relief="flat", command=lambda: master.switch_frame(PortScan))
         portscan.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
-
-        ssh = Button(buttonMm2, text="SSH", height=1, width=10, fg="#564898",bg="white", font=font, relief="flat", command=lambda: master.switch_frame(SSH))
-        ssh.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
 
         #워닝소리
         labelWarn=tkinter.Label(warning, text="!WARNING:\nUNAUTHORIZED ATTEMPT OF THESE PROTOCOLS MAY CAUSE LEGAL ISSUES DEPENDING ON YOUR COUNTRY'S REGULATIONS.", font=font2, fg="#e9511c")
@@ -166,52 +157,6 @@ class UnZipper(Frame):
         text_pwd = "PASSWORD IS : " + unzip.passwd
         self.labelResult.configure(text=text_pwd)
 
-
-class Backdoor(Frame):
-    def __init__(self, master):
-        Frame.__init__(self, master)
-        font = tkinter.font.Font(family="Malgun Gothic", size=40, weight="bold", slant="italic")
-
-        #프레임 설정
-        titleBD=tkinter.Frame(self)
-        titleBD.pack(side="top", fill="x", expand=True, anchor="n", ipady=40)
-        mainBD=tkinter.Frame(self, pady = 100)
-        mainBD.pack(side="top", padx = 100, fill="both", expand=True, anchor="n", pady = 10)
-        ipBD=tkinter.Frame(mainBD)
-        ipBD.pack(side="top", fill="both", pady = 50)
-        portBD=tkinter.Frame(mainBD)
-        portBD.pack(side="top", fill="both", expand=True, pady = 50)
-        button=tkinter.Frame(self, padx = 70, pady = 30)
-        button.pack(side="bottom", fill="x")
-
-        #title
-        labelTitle=tkinter.Label(titleBD, text="BACKDOOR", height=1, width=12, font=font, bg="#564898", fg="white")
-        labelTitle.pack(side = "left", expand = YES, fill = BOTH)
-        labelWhite=tkinter.Label(titleBD, text="", height=1, font=font)
-        labelWhite.pack(side = "left", expand = YES, fill = BOTH)
-        labelTultip=tkinter.Label(titleBD, text="INSTALL A BACKDOOR TO ANOTHER FIREWALL", height=1, width=46, font=font, bg="#564898", fg="#cac4e2")
-        labelTultip.pack(side = "left", expand = YES, fill = BOTH)
-
-        #ip 입력창
-        entry = Entry(ipBD, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
-        entry.pack(side = "right", expand = YES, fill = X)
-
-        labelIp=tkinter.Label(ipBD, text="IP: ", font=font)
-        labelIp.pack(side = "right")
-
-        entry2 = Entry(portBD, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
-        entry2.pack(side = "right", expand = YES, fill = X)
-
-        labelPort=tkinter.Label(portBD, text="PORT: ", font=font)
-        labelPort.pack(side = "right")
-
-        #버튼 입력창
-        init = Button(button, text="START", height=1, width=10, fg="black",bg="#ec6818", font=font, relief="flat")
-        init.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
-
-        exit = Button(button, text="EXIT", height=1, width=10, fg="black",bg="#5bb137", font=font, relief="flat", command=lambda: master.switch_frame(Mmenu))
-        exit.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
-
 class DDos(Frame): #start 버튼을 누르면 공격중이라는 팝업이 떴으면 좋겠음 팝업을 끄면 공격이 중지되는 방식으로 작동
     def __init__(self, master):
         Frame.__init__(self, master)
@@ -279,85 +224,7 @@ class DDos(Frame): #start 버튼을 누르면 공격중이라는 팝업이 떴�
     def textStop(self):
         self.labelStat.configure(text="")
         multiserver.put_data = "quit"
-
-class SSH(Frame): #password File이란 이름으로 file selector 추가
-    def __init__(self, master):
-        Frame.__init__(self, master)
-        font = tkinter.font.Font(family="Malgun Gothic", size=40, weight="bold", slant="italic")
-
-        #프레임 설정
-        titleSSH=tkinter.Frame(self)
-        titleSSH.pack(side="top", fill="x", expand=True, anchor="n", ipady=30)
-        mainSSH=tkinter.Frame(self, pady = 100)
-        mainSSH.pack(side="top", padx = 100, fill="both", expand=True, anchor="n", pady = 10)
-        ipSSH=tkinter.Frame(mainSSH)
-        ipSSH.pack(side="top", fill="both", pady = 30)
-        portSSH=tkinter.Frame(mainSSH)
-        portSSH.pack(side="top", fill="both", expand=True, pady = 30)
-        password_File=tkinter.Frame(mainSSH)
-        password_File.pack(side="top", fill="both", expand=True, pady = 30)
-        result=tkinter.Frame(mainSSH)
-        result.pack(side="top", fill="both", expand=True)
-        button=tkinter.Frame(self, padx = 70, pady = 20)
-        button.pack(side="bottom", fill="x")
-
-        #title
-        labelTitle=tkinter.Label(titleSSH, text="SSH", height=1, width=12, font=font, bg="#564898", fg="white")
-        labelTitle.pack(side = "left", expand = YES, fill = BOTH)
-        labelWhite=tkinter.Label(titleSSH, text="", height=1, font=font)
-        labelWhite.pack(side = "left", expand = YES, fill = BOTH)
-        labelTultip=tkinter.Label(titleSSH, text="INITIATE SSH BRUTE FORCE PROTOCOL", height=1, width=46, font=font, bg="#564898", fg="#cac4e2")
-        labelTultip.pack(side = "left", expand = YES, fill = BOTH)
-
-        #ip 값
-        self.entry = Entry(ipSSH, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
-        self.entry.pack(side = "right", expand = YES, fill = X)
-
-        labelIp=tkinter.Label(ipSSH, text="IP: ", font=font)
-        labelIp.pack(side = "right")
-
-        #userId 값
-        self.entry2 = Entry(portSSH, relief="flat", font=font, highlightthickness=5, highlightbackground="gray")
-        self.entry2.pack(side = "right", expand = YES, fill = X)
-
-        labelPort=tkinter.Label(portSSH, text="USER ID : ", font=font)
-        labelPort.pack(side = "right")
-
-        #password file 입력창
-        self.labelPF = tkinter.Label(password_File, text="", relief="solid", width=15, bg="white", font=tkinter.font.Font(family="Malgun Gothic", size=20))
-        self.labelPF.pack(side = "right", expand = YES, fill = X)
-
-        buttonFL=Button(password_File, text="PASSWORD FILE: ", font=font, command=self.findPF)
-        buttonFL.pack(side = "right")
-
-        #SSH 비밀번호 라벨
-        self.labelResult=tkinter.Label(result, text="SSH PASSWORD: ", font=font, fg="red")
-        self.labelResult.pack(side = "bottom")
-
-        #버튼 입력창
-        init = Button(button, text="START", height=1, width=10, fg="black",bg="#ec6818", font=font, relief="flat", command=self.ssh_attack)
-        init.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
-
-        exit = Button(button, text="EXIT", height=1, width=10, fg="black",bg="#5bb137", font=font, relief="flat", command=lambda: master.switch_frame(Mmenu))
-        exit.pack(side = "left", anchor = "s", padx = 50, expand = YES, fill = X)
-
-        self.filepath = ""
-
-    def findPF(self):
-        fname = filedialog.askopenfile(mode='r', filetypes=[('Txt Files', '*.txt')])
-        self.labelPF.configure(text=format(fname.name))
-        self.filepath = fname.name
-        fname.close()
-    def ssh_attack(self):
-        host = self.entry.get()
-        user = self.entry2.get()
-        file_path = self.filepath
-        file_path_replaced = file_path.replace("\\", "/", 10)
-        print(host)
-        print(user)
-        ssh_dictionary.pass_find2(file_path_replaced,host, user)
         
-
 class PortScan(Frame):
     def __init__(self, master):
         Frame.__init__(self, master)
