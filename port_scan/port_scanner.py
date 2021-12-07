@@ -18,7 +18,7 @@ def connScan(tgtHost, tgtPort):
         recv_msg = str(tgtPort) + "/tcp open"
 
     except Exception as e:
-        screenLock.acquire()                                                                                 #에러 또는 접속이 안되는경우 출력을 위해 lock을 걸고
+                                                                           #에러 또는 접속이 안되는경우 출력을 위해 lock을 걸고
         print("[-] %d/tcp closed" % tgtPort)
 
         recv_msg = str(tgtPort) + "/tcp closed"
